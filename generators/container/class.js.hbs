@@ -1,0 +1,107 @@
+/**
+ *
+ * {{ properCase name }} Container
+ * created by generator
+ *
+ */
+{{#if wantWX}}
+
+/* global wx */
+{{/if}}
+
+import Taro, { Component } from '@tarojs/taro'
+import { View, Text } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import PropTypes from 'prop-types'
+
+import './index.scss'
+
+@connect(
+  (state) => (
+    state
+  ),
+  (dispatch) => ({
+    dispatch
+  })
+)
+
+export class {{ properCase name }} extends Component {
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {}
+  // }
+  // /**
+  //  * @desc 在微信小程序中这一生命周期方法对应页面的onLoad或入口文件app中的onLaunch
+  //  */
+  // componentWillMount() {}
+  // /**
+  //  * @desc 在微信小程序中这一生命周期方法对应页面的onReady或入口文件app中的onLaunch
+  //  * 在 componentWillMount后执行
+  //  */在微信小程序中这一生命周期方法对应 onShow
+  // componentDidMount() {}
+  // /**
+  //  * @desc 在微信小程序中这一生命周期方法对应 onShow
+  //  */
+  {{#if wantHeader}}
+  config = {
+    navigationBarTitleText: '{{ titleCase name }}'
+  }
+  {{/if}}
+  // componentDidShow() {}
+  // /**
+  //  * @desc 在微信小程序中这一生命周期方法对应 onHide
+  //  */
+  // componentDidHide() {}
+  // /**
+  //  * @desc 错误监听函数，在微信小程序中这一生命周期方法对应 onError
+  //  */
+  // componentDidCatchError() {}
+  // /**
+  //  * @desc 页面不存在监听函数，在微信小程序中这一生命周期方法对应 onPageNotFound
+  //  */
+  // componentDidNotFound() {}
+  // /**
+  //  * @desc 页面是否需要更新
+  //  */
+  // shouldComponentUpdate() {}
+  // /**
+  //  * @desc 页面即将更新
+  //  */
+  // componentWillUpdate() {}
+  // /**
+  //  * @desc 页面更新完毕
+  //  */
+  // componentDidUpdate() {}
+  // /**
+  //  * @desc 页面退出，在微信小程序中这一生命周期方法对应 onUnload
+  //  */
+  // componentWillUnmount() {}
+
+  render() {
+    const { generateText } = this.props
+    {{#if wantWX}}
+    console.log(wx)
+    {{/if}}
+    return (
+      <View className='{{ kebabCase name }}-container'>
+        <Text className='generate-text'>This page name is {{ sentenceCase name }}</Text>
+        <Text className='generate-text'>{generateText}</Text>
+      </View>
+    )
+  }
+}
+
+{{ properCase name }}.defaultProps = {
+  generateText: 'This generate page'
+}
+
+/*
+ * 父级 props
+ * 自身 state
+ * 自身 dispatch function
+ */
+{{ properCase name }}.propTypes = {
+  generateText: PropTypes.string
+}
+
+export default {{ properCase name }}

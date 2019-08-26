@@ -1,0 +1,19 @@
+/*
+ *
+ * {{ properCase name }} actions
+ * created by generator
+ *
+ */
+
+import {
+  DEFAULT_ACTION,
+} from '../constants/{{ camelCase name }}'
+
+/**
+ * @desc eslint 检测 export 为单一一个时，应该优先使用 export default
+ */
+export const defaultAction = () => { // eslint-disable-line
+  return {
+    type: DEFAULT_ACTION
+  }
+}
