@@ -31,49 +31,59 @@ export class {{ properCase name }} extends Component {
   //   this.state = {}
   // }
   // /**
-  //  * @desc 在微信小程序中这一生命周期方法对应页面的onLoad或入口文件app中的onLaunch
+  //  * @desc 监听程序初始化，初始化完成时触发（全局只触发一次）
+  //  * 此时页面 DOM 尚未准备好，还不能和视图层进行交互
   //  */
   // componentWillMount() {}
   // /**
-  //  * @desc 在微信小程序中这一生命周期方法对应页面的onReady或入口文件app中的onLaunch
-  //  * 在 componentWillMount后执行
-  //  */在微信小程序中这一生命周期方法对应 onShow
-  // componentDidMount() {}
-  // /**
-  //  * @desc 在微信小程序中这一生命周期方法对应 onShow
+  //  * @desc 监听程序初始化，初始化完成时触发（全局只触发一次）
+  //  * 页面已经准备妥当，可以和视图层进行交互
   //  */
+  // componentDidMount() {}
   {{#if wantHeader}}
   config = {
+    // 当前页配置项会覆盖全局配置项相同的配置
     navigationBarTitleText: '{{ titleCase name }}'
   }
   {{/if}}
+  // /**
+  //  * @desc 页面显示/切入前台时触发
+  //  */
   // componentDidShow() {}
   // /**
-  //  * @desc 在微信小程序中这一生命周期方法对应 onHide
+  //  * @desc 页面隐藏/切入后台时触发
   //  */
   // componentDidHide() {}
   // /**
-  //  * @desc 错误监听函数，在微信小程序中这一生命周期方法对应 onError
+  //  * @param {string} error 程序的报错信息
+  //  * @desc 程序发生脚本错误或 API 调用报错时触发
   //  */
-  // componentDidCatchError() {}
+  // componentDidCatchError(error) {}
   // /**
-  //  * @desc 页面不存在监听函数，在微信小程序中这一生命周期方法对应 onPageNotFound
+  //  * @param {object} message 找不到的页面路径、参数及是否本次启动的首个页面
+  //  * @desc 程序要打开的页面不存在时触发
   //  */
-  // componentDidNotFound() {}
+  // componentDidNotFound(message) {}
   // /**
+  //  * @param {object} nextProps 下一状态的 props
+  //  * @param {object} nextState 下一状态的 state
   //  * @desc 页面是否需要更新
   //  */
-  // shouldComponentUpdate() {}
+  // shouldComponentUpdate(nextProps, nextState) {}
   // /**
+  //  * @param {object} nextProps 下一状态的 props
+  //  * @param {object} nextState 下一状态的 state
   //  * @desc 页面即将更新
   //  */
-  // componentWillUpdate() {}
+  // componentWillUpdate(nextProps, nextState) {}
   // /**
+  //  * @param {object} prevProps 上一状态的 props
+  //  * @param {object} prevState 上一状态的 state
   //  * @desc 页面更新完毕
   //  */
-  // componentDidUpdate() {}
+  // componentDidUpdate(prevProps, prevState) {}
   // /**
-  //  * @desc 页面退出，在微信小程序中这一生命周期方法对应 onUnload
+  //  * @desc 页面卸载时触发
   //  */
   // componentWillUnmount() {}
 
