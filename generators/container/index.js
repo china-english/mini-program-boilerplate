@@ -22,7 +22,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'What should it be called ?',
-      default: 'DefaultPage',
+      default: 'defaultPage',
       validate: (value) => {
         if ((/.+/).test(value)) {
           return nameExists(value) ? 'A file with this name already exists' : true

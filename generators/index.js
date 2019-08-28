@@ -11,7 +11,7 @@ const containerGenerator = require('./container/index.js')
 
 module.exports = (plop) => {
   plop.setGenerator('component', componentGenerator)
-  plop.setGenerator('container', containerGenerator)
+  plop.setGenerator('pages', containerGenerator)
 
   plop.setHelper('preCurly', (t) => `{${t}}`)
 
