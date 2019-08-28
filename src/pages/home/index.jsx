@@ -4,7 +4,9 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import { add, minus, asyncAdd } from '../../actions/counter'
+import { add, minus, asyncAdd } from 'actions/counter'
+
+import platformInfo from 'theme/platform'
 
 import './index.scss'
 
@@ -39,6 +41,7 @@ class Index extends Component {
   }
 
   render () {
+    console.log(platformInfo, 'res') // eslint-disable-line
     return (
       <View className='home-container'>
         <Button className='add_btn' onClick={this.props.add}>+</Button>

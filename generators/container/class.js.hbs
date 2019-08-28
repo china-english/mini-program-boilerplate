@@ -16,16 +16,14 @@ import PropTypes from 'prop-types'
 
 import './index.scss'
 
-@connect(
-  (state) => (
+@connect((state) => (
     state
-  ),
-  (dispatch) => ({
+  ), (dispatch) => ({
     dispatch
   })
 )
 
-export class {{ properCase name }} extends Component {
+class {{ properCase name }} extends Component {
   // constructor(props) {
   //   super(props)
   //   this.state = {}

@@ -1,3 +1,5 @@
+const path = require('path')
+
 const config = {
   projectName: 'mini-program-boilerplate',
   date: '2019-8-20',
@@ -6,6 +8,15 @@ const config = {
     '640': 2.34 / 2,
     '750': 1,
     '828': 1.81 / 2
+  },
+  alias: {
+    'actions': path.resolve(__dirname, '..', 'src/actions'),
+    'components': path.resolve(__dirname, '..', 'src/components'),
+    'constants': path.resolve(__dirname, '..', 'src/constants'),
+    'pages': path.resolve(__dirname, '..', 'src/pages'),
+    'reducers': path.resolve(__dirname, '..', 'src/reducers'),
+    'theme': path.resolve(__dirname, '..', 'src/theme'),
+    'utils': path.resolve(__dirname, '..', 'src/utils')
   },
   sourceRoot: 'src',
   outputRoot: 'dist',

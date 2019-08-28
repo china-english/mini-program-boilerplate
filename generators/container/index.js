@@ -73,7 +73,7 @@ module.exports = {
      */
     const actions = [{
       type: 'add',
-      path: '../src/pages/{{camelCase name}}/index.js',
+      path: '../src/pages/{{camelCase name}}/index.jsx',
       templateFile: './container/class.js.hbs',
       abortOnFail: true,
     }, {
@@ -135,7 +135,7 @@ module.exports = {
       actions.push({
         type: 'modify',
         path: '../src/app.jsx',
-        pattern: /(pages: \[)/gi,
+        pattern: /(\'pages\/home\/index\'\,)/gi,
         template: `$1\n      'pages/${routerName}/index',`,
       })
     }
