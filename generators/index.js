@@ -17,18 +17,10 @@ module.exports = (plop) => {
 
   plop.addHelper('directory', (comp) => {
     try {
-      fs.accessSync(path.join(__dirname, `../src/containers/${comp}`), fs.F_OK)
-      return `containers/${comp}`
+      fs.accessSync(path.join(__dirname, `../src/pages/${comp}`), fs.F_OK)
+      return `pages/${comp}`
     } catch (e) {
-      try {
-        return `forms/${comp}`
-      } catch (e1) {
-        try {
-          return `forms/formFields/${comp}`
-        } catch (e2) {
-          return `components/${comp}`
-        }
-      }
+      return `components/${comp}`
     }
   })
   plop.addHelper('curly', (object, open) => (open ? '{' : '}'))
