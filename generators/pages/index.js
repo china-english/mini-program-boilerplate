@@ -4,96 +4,75 @@
  * source => https://github.com/china-english/react-native-boilerplate
  * author => fei
  */
-const nameExists = require('../utils/componentExists')
-
-// import nameExists from '../utils/componentExists'
+const nameExists = require('../utils/nameExists')
 
 module.exports = {
-  description: 'Generate a page container',
+  description: 'Generate a page container(生成一个页面文件)',
   prompts: [
-    // {
-    //   type: 'list',
-    //   name: 'type',
-    //   message: 'Select the base page type:',
-    //   default: 'React.Component',
-    //   choices: () => ['React.Component', 'Stateless Function', 'React.PureComponent'],
-    // },
     {
       type: 'input',
       name: 'name',
-      message: 'What should it be called ?',
+      message: 'What should it be called ?(请输入页面名称)',
       default: 'defaultPage',
       validate: (value) => {
         if ((/.+/).test(value)) {
-          return nameExists(value) ? 'A file with this name already exists' : true
+          return nameExists(value) ? 'A file with this name already exists(文件名称已存在)' : true
         }
-        return 'The name is required'
+        return 'The name is required(请输入文件名称)'
       },
     },
     {
       type: 'confirm',
       name: 'hasRouter',
       default: true,
-      message: 'Do you want to link it with a route?',
+      message: 'Do you want to link it with a route?（是否将页面添加到项目路由中）',
     },
     {
       type: 'confirm',
       name: 'wantWX',
       default: true,
-      message: 'Do you need wx API?',
+      message: 'Do you need wx API?（是否在页面中使用微信 API）',
     },
     {
       type: 'confirm',
       name: 'wantHeader',
       default: true,
-      message: 'Do you want common page header?',
+      message: 'Do you want common page header?（是否在页面中添加页面标题）',
     },
     {
       type: 'confirm',
       name: 'wantActionsAndReducer',
       default: true,
-      message: 'Do you want an actions/constants/reducer tuple for this container?',
+      message: 'Do you need actions/constants/reducer tuple for this page?（是否需要 actions/constants/reducer）',
     }
   ],
   actions: (answers) => {
-    // Generate index.js and index.test.js
-    // let componentTemplate
-    // switch (answers.type) {
-    //   case 'Stateless Function': {
-    //     componentTemplate = './container/stateless.js.hbs';
-    //     break;
-    //   }
-    //   default: {
-    //     componentTemplate = './container/class.js.hbs';
-    //   }
-    // }
-
     /* Create the file infrastructure
      * 创建文件基本结构
      */
     const actions = [{
       type: 'add',
       path: '../src/pages/{{camelCase name}}/index.jsx',
-      templateFile: './container/class.js.hbs',
+      templateFile: './pages/class.js.hbs',
       abortOnFail: true,
     }, {
       type: 'add',
       path: '../src/pages/{{camelCase name}}/index.scss',
-      templateFile: './container/scss.js.hbs',
+      templateFile: './pages/scss.js.hbs',
       abortOnFail: true,
     }];
 
     /* If you want actions and a reducer, generate actions.js, constants.js,
-     * reducer.js and the corresponding tests for actions and the reducer
+     * reducer.js
      * 如果你需要 actions 和 reducer，那么将会生成以下文件：actions.js, constants.js,
-     * reducer.js 以及 actions.test.js 和 reducer.test.js
+     * reducer.js
      */
     if (answers.wantActionsAndReducer) {
       // Constants
       actions.push({
         type: 'add',
         path: '../src/constants/{{camelCase name}}.js',
-        templateFile: './container/constants.js.hbs',
+        templateFile: './pages/constants.js.hbs',
         abortOnFail: true,
       })
 
@@ -101,7 +80,7 @@ module.exports = {
       actions.push({
         type: 'add',
         path: '../src/reducers/{{camelCase name}}.js',
-        templateFile: './container/reducer.js.hbs',
+        templateFile: './pages/reducer.js.hbs',
         abortOnFail: true,
       })
       actions.push({
@@ -121,17 +100,14 @@ module.exports = {
       actions.push({
         type: 'add',
         path: '../src/actions/{{camelCase name}}.js',
-        templateFile: './container/actions.js.hbs',
+        templateFile: './pages/actions.js.hbs',
         abortOnFail: true,
       })
     }
 
     // router
     if (answers.hasRouter) {
-      // const reg = new RegExp('Scene')
-      const routerName = answers.name
-        // .replace(reg, '')
-        .replace(/( |^)[A-Z]/g, (L) => L.toLowerCase())
+      const routerName = answers.name.replace(/( |^)[A-Z]/g, (L) => L.toLowerCase())
       actions.push({
         type: 'modify',
         path: '../src/app.jsx',
