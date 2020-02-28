@@ -12,10 +12,15 @@ const pageExists = require('../utils/pageExists')
 module.exports = {
   description: 'Generate a component(生成一个组件文件)',
   prompts: [{
+    type: 'confirm',
+    name: 'isPageComponent',
+    default: false,
+    message: 'Does this component belong to a page?（这个组件属于某个页面私有吗）',
+  }, {
     type: 'input',
     name: 'name',
     message: 'What should it be called?(请输入组件名称)',
-    default: 'headerCopy',
+    default: (answers) => answers.isPageComponent ? 'headerCopy' : 'HeaderCopy',
     validate: (value) => {
       if ((/.+/).test(value)) {
         return nameExists(value) ? 'A file with this name already exists(文件名称已存在)' : true
@@ -24,9 +29,9 @@ module.exports = {
     },
   }, {
     type: 'confirm',
-    name: 'isPageComponent',
-    default: false,
-    message: 'Does this component belong to a page ?（这个组件属于某个页面私有吗）',
+    name: 'overwriteStyle',
+    default: (answers) => !answers.isPageComponent,
+    message: 'Does this component need to override the style of the taro-ui（这个组件需要覆写 taro-ui 的样式吗?）',
   }, {
     when: (answers) => answers.isPageComponent,
     type: 'input',
@@ -42,12 +47,12 @@ module.exports = {
   actions: (answers) => {
     let actions = [{
       type: 'add',
-      path: '../src/components/{{ camelCase name }}/index.jsx',
+      path: '../src/components/{{ properCase name }}/index.jsx',
       templateFile: './component/class.js.hbs',
       abortOnFail: true,
     }, {
       type: 'add',
-      path: '../src/components/{{ camelCase name }}/index.scss',
+      path: '../src/components/{{ properCase name }}/index.scss',
       templateFile: './component/scss.js.hbs',
       abortOnFail: true,
     }];
@@ -58,11 +63,25 @@ module.exports = {
         templateFile: './component/class.js.hbs',
         abortOnFail: true,
       }, {
-        type: 'modify',
-        path: `../src/pages/${answers.pageName}/index.scss`,
-        pattern: /(the private component)/gi,
-        template: `$1\n.{{  kebabCase name }}-container {\n}`,
+        type: 'add',
+        path: `../src/pages/${answers.pageName}/{{ camelCase name }}.scss`,
+        templateFile: './component/scss.js.hbs',
+        abortOnFail: true,
       }];
+    }
+    if (answers.overwriteStyle) {
+      actions.push({
+        type: 'add',
+        path: `../src/customComponentTheme/{{ camelCase name }}.scss`,
+        templateFile: './component/overwriteStyle.js.hbs',
+        abortOnFail: true,
+      })
+      actions.push({
+        type: 'modify',
+        path: `../src/customComponentTheme/index.scss`,
+        pattern: /( \*\/)/gi,
+        template: `$1\n\n// {{ camelCase name }} style which overwrtie taro-ui\n@import './{{ camelCase name }}.scss';`,
+      })
     }
     return actions;
   },

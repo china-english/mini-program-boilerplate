@@ -13,7 +13,7 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'What should it be called ?(请输入页面名称)',
-      default: 'defaultPage',
+      default: 'default',
       validate: (value) => {
         if ((/.+/).test(value)) {
           return nameExists(value) ? 'A file with this name already exists(文件名称已存在)' : true
@@ -37,7 +37,7 @@ module.exports = {
       type: 'confirm',
       name: 'wantHeader',
       default: true,
-      message: 'Do you want common page header?（是否在页面中添加页面标题）',
+      message: 'Do you want use custom header?（是否在页面中添加自定义导航栏）',
     },
     {
       type: 'confirm',

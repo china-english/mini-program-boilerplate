@@ -27,7 +27,6 @@ const pageContainersComponents = function () {
 const components = pageComponents.concat(pageContainers).concat(pageContainersComponents())
 
 function nameExists(comp) {
-  console.log(comp, components);
   return components.indexOf(comp) >= 0
 }
 

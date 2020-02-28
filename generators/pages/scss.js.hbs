@@ -1,13 +1,16 @@
+// @import '../../theme/index';
+
 .{{ kebabCase name }}-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
+  .default-page-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
   .generate-text {
     display: block;
     width: 100%;
     text-align: center;
   }
 }
-// if has private component write the style of the private component
