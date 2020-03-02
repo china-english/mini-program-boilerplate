@@ -5,10 +5,29 @@
  * author => fei
  */
 const nameExists = require('../utils/nameExists')
+const packageExists = require('../utils/packageExists')
 
 module.exports = {
   description: 'Generate a page container(生成一个页面文件)',
   prompts: [
+    {
+      type: 'confirm',
+      name: 'isSubpackage',
+      default: false,
+      message: 'Does this page belong to a subpackage?（这个页面属于分包所有吗）',
+    },
+    {
+      when: (answers) => answers.isSubpackage,
+      type: 'input',
+      name: 'subpackageName',
+      message: 'What is the name of the subpackage?（请输入这个组件所属页面名称）',
+      validate: (value) => {
+        if ((/.+/).test(value)) {
+          return !packageExists(value) ? 'A subpackage with this name does not exist(找不到匹配的文件)' : true;
+        }
+        return 'The name is required(请输入文件名称)';
+      },
+    },
     {
       type: 'input',
       name: 'name',
@@ -50,18 +69,21 @@ module.exports = {
     /* Create the file infrastructure
      * 创建文件基本结构
      */
+    let pathPrefix = '../src/pages'
+    if (answers.isSubpackage) {
+      pathPrefix = '../src/{{subpackageName}}'
+    }
     const actions = [{
       type: 'add',
-      path: '../src/pages/{{camelCase name}}/index.jsx',
+      path: `${pathPrefix}/{{camelCase name}}/index.jsx`,
       templateFile: './pages/class.js.hbs',
       abortOnFail: true,
     }, {
       type: 'add',
-      path: '../src/pages/{{camelCase name}}/index.scss',
+      path: `${pathPrefix}/{{camelCase name}}/index.scss`,
       templateFile: './pages/scss.js.hbs',
       abortOnFail: true,
     }];
-
     /* If you want actions and a reducer, generate actions.js, constants.js,
      * reducer.js
      * 如果你需要 actions 和 reducer，那么将会生成以下文件：actions.js, constants.js,
@@ -108,12 +130,22 @@ module.exports = {
     // router
     if (answers.hasRouter) {
       const routerName = answers.name.replace(/( |^)[A-Z]/g, (L) => L.toLowerCase())
-      actions.push({
-        type: 'modify',
-        path: '../src/app.jsx',
-        pattern: /(\'pages\/home\/index\'\,)/gi,
-        template: `$1\n      'pages/${routerName}/index',`,
-      })
+      if (answers.isSubpackage) {
+        const parttern = new RegExp(`${answers.subpackageName} path`)
+        actions.push({
+          type: 'append',
+          path: '../src/app.jsx',
+          pattern: parttern,
+          template: `          '${routerName}/index',`,
+        })
+      } else {
+        actions.push({
+          type: 'modify',
+          path: '../src/app.jsx',
+          pattern: /(\'pages\/home\/index\'\,)/,
+          template: `$1\n      'pages/${routerName}/index',`,
+        })
+      }
     }
     return actions
   },
