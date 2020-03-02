@@ -5,6 +5,7 @@
  * author => fei
  */
 const nameExists = require('../utils/nameExists')
+const pageExists = require('../utils/pageExists')
 const packageExists = require('../utils/packageExists')
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
       when: (answers) => answers.isSubpackage,
       type: 'input',
       name: 'subpackageName',
-      message: 'What is the name of the subpackage?（请输入这个组件所属页面名称）',
+      message: 'What is the name of the subpackage?（请输入所属分包名称）',
       validate: (value) => {
         if ((/.+/).test(value)) {
           return !packageExists(value) ? 'A subpackage with this name does not exist(找不到匹配的文件)' : true;
@@ -35,7 +36,7 @@ module.exports = {
       default: 'default',
       validate: (value) => {
         if ((/.+/).test(value)) {
-          return nameExists(value) ? 'A file with this name already exists(文件名称已存在)' : true
+          return pageExists(value) ? 'A file with this name already exists(文件名称已存在)' : true
         }
         return 'The name is required(请输入文件名称)'
       },

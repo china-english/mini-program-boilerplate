@@ -57,6 +57,20 @@ module.exports = {
       templateFile: './package/addSubpackages.js.hbs',
       abortOnFail: true,
     })
+    actions.push({
+      type: 'append',
+      path: './utils/pageExists.js',
+      pattern: /(subPackages pages)/,
+      template: 'const {{camelCase name}}Pages = fs.readdirSync(path.join(__dirname, \'../../src/{{camelCase name}}\'));',
+      abortOnFail: true,
+    })
+    actions.push({
+      type: 'append',
+      path: './utils/pageExists.js',
+      pattern: /(concat array)/,
+      template: '    .concat({{camelCase name}}Pages)',
+      abortOnFail: true,
+    })
     if (answers.needAssets) {
       actions.push({
         type: 'add',

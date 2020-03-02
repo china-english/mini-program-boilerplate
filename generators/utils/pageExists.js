@@ -6,9 +6,12 @@
 const fs = require('fs');
 const path = require('path');
 const pages = fs.readdirSync(path.join(__dirname, '../../src/pages'));
+// subPackages pages
 
 function pageExists(comp) {
-  return pages.indexOf(comp) >= 0;
+  const allPages = pages
+  // concat array
+  return allPages.indexOf(comp) >= 0;
 }
 
 module.exports = pageExists;

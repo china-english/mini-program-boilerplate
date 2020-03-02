@@ -22,7 +22,7 @@ module.exports = {
       when: (answers) => answers.isPageComponent,
       type: 'input',
       name: 'pageName',
-      message: 'What is the name of the container?（请输入这个组件所属页面名称）',
+      message: 'What is the name of the container?（请输入所属页面名称）',
       validate: (value) => {
         if ((/.+/).test(value)) {
           return !pageExists(value) ? 'A page with this name does not exist(找不到匹配的文件)' : true;
