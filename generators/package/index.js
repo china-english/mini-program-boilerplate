@@ -50,6 +50,13 @@ module.exports = {
       templateFile: './package/md.js.hbs',
       abortOnFail: true,
     }]
+    actions.push({
+      type: 'append',
+      path: '../src/app.jsx',
+      pattern: /(subPackages: \[)/,
+      templateFile: './package/addSubpackages.js.hbs',
+      abortOnFail: true,
+    })
     if (answers.needAssets) {
       actions.push({
         type: 'add',

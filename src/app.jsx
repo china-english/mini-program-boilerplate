@@ -25,6 +25,9 @@ class App extends Component {
       'pages/home/index',
       'pages/detail/index',
     ],
+    // add subpackages into the array
+    subPackages: [
+    ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
